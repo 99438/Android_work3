@@ -51,4 +51,6 @@ dependencies {
     // 加载圆形图片
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("androidx.viewpager2:viewpager2:1.0.0")
+    //
+    implementation("androidx.activity:activity:1.6.0-alpha05")
 }

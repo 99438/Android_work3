@@ -1,40 +1,32 @@
 package com.example.bili;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-import static java.lang.Math.random;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bili.databinding.UpInfoBinding;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-public class DetailActivity extends AppCompatActivity {
+public class detailActivity extends AppCompatActivity {
 
     private UpInfoBinding binding;
     Button btnUnfollow;
     TextView name;
     TextView focus;
     TextView follow;
+
+    // 返回键退出
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        setResult(0, intent);
+        finish();
+    }
 
     @Override
     protected void onCreate(@NonNull Bundle savedInstanceState) {
@@ -55,6 +47,9 @@ public class DetailActivity extends AppCompatActivity {
         follow.setText("粉丝：100");
         String upid = i.getStringExtra("name");
 
+        // 返回
+
+
         btnUnfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +64,7 @@ public class DetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
 }

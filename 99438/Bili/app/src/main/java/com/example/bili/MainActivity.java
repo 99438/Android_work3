@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -28,12 +27,12 @@ import com.example.bili.databinding.UpListBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class mainActivity extends AppCompatActivity {
 
     // 和recyclerview有关的变量
     RecyclerView recyclerView;
     Recycle_Adapter recycleAdapter;
-    public List<UpList> uplists = new ArrayList<>();
+    public List<upList> uplists = new ArrayList<>();
 
     // 和viewpager2有关的变量
     ViewPager2 viewPager2;
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 写up的id数据
         for (int i = 0; i < 6; i++) {
-            UpList list = new UpList();
+            upList list = new upList();
             list.ID = "up" + (i + 1);
             uplists.add(list);
         }
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         // recyclerView需要一个Adapter
         recycleAdapter = new Recycle_Adapter();
         recyclerView.setAdapter(recycleAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mainActivity.this);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            UpList list = uplists.get(position);
+            upList list = uplists.get(position);
             holder.id_info.setText(list.ID+"的动态");
         }
 
@@ -119,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     // RecyclerView的Adapter函数
     public class Recycle_Adapter extends RecyclerView.Adapter<Recycle_Adapter.MyViewHolder> implements View.OnClickListener {
 
@@ -147,14 +147,14 @@ public class MainActivity extends AppCompatActivity {
         // 控件的各种跳转
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            UpList list = uplists.get(position);
+            upList list = uplists.get(position);
             holder.head.setContentDescription(list.ID);
             holder.id.setText(list.ID);
             holder.id.setOnLongClickListener(new View.OnLongClickListener(){
 
                 @Override
                 public boolean onLongClick(View v){
-                    Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+                    Intent intent = new Intent(mainActivity.this, detailActivity.class);
                     intent.putExtra("name",list.ID);
                     startActivityForResult(intent,1);
                     return false;
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onLongClick(View v){
-                    Intent intent = new Intent(MainActivity.this,DetailActivity.class);
+                    Intent intent = new Intent(mainActivity.this, detailActivity.class);
                     intent.putExtra("name",list.ID);
                     startActivityForResult(intent,1);
                     Log.e(TAG,"进入");
@@ -193,8 +193,10 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < uplists.size(); i++) {
                 if (uplists.get(i).getID().equals(upname)) {
                     uplists.remove(i);
-                    notifyItemRemoved(i);
-                    notifyItemRangeChanged(i,uplists.size());
+                    recycleAdapter.notifyItemRemoved(i);
+                    viewPagers2Adapter.notifyItemRemoved(i);
+                    recycleAdapter.notifyItemRangeChanged(i,uplists.size());
+                    viewPagers2Adapter.notifyItemRangeChanged(i,uplists.size());
                     break;
                 }
             }
@@ -218,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     // 按钮的接口
     public interface OnItemClickListener {
         void onItemClick(int pos);
@@ -228,11 +231,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 1) {
             // 获取被取关的up主的名称
             String name = data.getStringExtra("name");
-            Log.e(TAG,(data.getStringExtra("name")));
             recycleAdapter.dataDelete(name);
         }
     }

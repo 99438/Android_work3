@@ -1,9 +1,9 @@
 package com.example.bili;
 
-public class UpList {
+public class upList {
     public String ID;
 
-    public UpList() {
+    public upList() {
         this.ID = ID;
     }
 

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Bili"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".mainActivity"
             android:label="动态页面"
             android:exported="true">
             <intent-filter>
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DetailActivity"
+        <activity android:name=".detailActivity"
             android:label="详情">
         </activity>
 
